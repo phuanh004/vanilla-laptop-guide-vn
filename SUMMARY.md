@@ -4,7 +4,7 @@
 
 ## Giới thiệu
 
-* [Tổng quan](gioi-thieu/tong-quan.md)
+* [Những hạn chế về phần cứng](gioi-thieu/tong-quan.md)
 
 ## Hoàn thiện các chức năng sau khi cài đặt <a id="sau-cai-dat"></a>
 
