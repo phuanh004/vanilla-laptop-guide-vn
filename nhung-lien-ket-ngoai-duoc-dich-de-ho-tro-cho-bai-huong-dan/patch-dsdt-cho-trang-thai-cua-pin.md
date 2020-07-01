@@ -1,5 +1,7 @@
 # Patch DSDT cho trạng thái của pin
 
+## Hướng dẫn cách patch DSDT để trạng thái pin hoạt động
+
 \[RehabMan\] Hướng dẫn cách patch DSDT để trạng thái pin hoạt động - Trích từ bài gốc [\[Guide\] How to patch DSDT for working battery status](https://www.tonymacx86.com/threads/guide-how-to-patch-dsdt-for-working-battery-status.116102/) và đã được chỉnh sửa để phù hợp với hiện tại.
 
 ### **Bối cảnh**
