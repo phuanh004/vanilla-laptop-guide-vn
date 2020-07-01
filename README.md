@@ -1,2 +1,2 @@
-# vanilla-laptop-guide-vn
+# Bài hướng dẫn cho Vanilla Laptop
 

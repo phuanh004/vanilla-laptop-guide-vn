@@ -1,6 +1,6 @@
 # Table of contents
 
-* [vanilla-laptop-guide-vn](README.md)
+* [Bài hướng dẫn cho Vanilla Laptop](README.md)
 
 ## Giới thiệu
 
