@@ -8,7 +8,7 @@
 
 ## Hoàn thiện các chức năng sau khi cài đặt <a id="sau-cai-dat"></a>
 
-* [Sửa lỗi trạng thái của pin](sau-cai-dat/sua-loi-trang-thai-cua-pin.md)
+* [Sửa trạng thái của pin](sau-cai-dat/sua-trang-thai-cua-pin.md)
 
 ## Những liên kết ngoài được dịch để hỗ trợ cho bài hướng dẫn
 

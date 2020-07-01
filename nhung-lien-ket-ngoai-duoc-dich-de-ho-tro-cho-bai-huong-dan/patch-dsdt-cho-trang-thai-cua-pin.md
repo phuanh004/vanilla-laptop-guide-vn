@@ -4,7 +4,7 @@
 
 \[RehabMan\] Hướng dẫn cách patch DSDT để trạng thái pin hoạt động - Trích từ bài gốc [\[Guide\] How to patch DSDT for working battery status](https://www.tonymacx86.com/threads/guide-how-to-patch-dsdt-for-working-battery-status.116102/) và đã được chỉnh sửa để phù hợp với hiện tại.
 
-### **Bối cảnh**
+### **Lời giới thiệu**
 
 Do phần cứng pin trên PC không tương thích với Apple SMbus, chúng ta sử dụng ACPI để truy cập trạng thái pin khi chạy OS X trên máy tính xách tay. Thông thường, tôi khuyên bạn sử dụng [ACPIBatteryManager.kext](https://github.com/RehabMan/OS-X-ACPI-Battery-Driver).  
   
@@ -36,5 +36,57 @@ Một vấn đề phổ biến khác sự kế thừa của ACPI trên OS X gặ
 
 ### Các kỹ năng cần có
 
-**DSDT** là một "chương trình máy tính." Như vậy, sẽ hữu ích khi có một số kỹ năng lập trình và kỹ năng về máy tính khi muốn sửa đổi nó. Các bản patch của DSDT về cơ bản, cũng có ngôn ngữ riêng của chúng \(được mô tả ngắn trong [Wiki của MaciASL](http://sourceforge.net/projects/maciasl/)\). 
+**DSDT** là một "chương trình máy tính." Như vậy, sẽ hữu ích khi có một số **kỹ năng lập trình** và **kỹ năng về máy tính** khi muốn sửa đổi nó. Các bản patch của DSDT cũng có ngôn ngữ riêng của chúng \(được mô tả vắn tắt trong [Wiki của MaciASL](http://sourceforge.net/projects/maciasl/)\). Cuối cùng, bản thân các bản patch về cơ bản về cơ bản là **tìm kiếm và thay thế biểu thức chính quy** \(regex\). Một số những điều cần thiết khác là **làm quen với trình biên dịch**, **lỗi biên dịch** \(compiler error\), và có khả năng **xác định lỗi** nằm ở đâu thông qua lỗi biên dịch.
+
+Thêm nữa, làm quen với ACPI cũng là một ý không tồi. Bạn có thể tải xuống bản chi tiết kỹ thuật tại đây: [https://www.acpica.org/](https://www.acpica.org/)
+
+Mục đích của hướng dẫn này không phải là để dạy cho bạn các kỹ năng lập trình cơ bản, các biểu thức chính quy hoặc ngôn ngữ ACPI.
+
+### Quy trình patch DSDT
+
+I use a rather 'mechanical' process to patching DSDT for battery status. I simply look for the parts that OS X finds offensive and mechanically convert it. Tôi không cố gắng quá nhiều để xác định phần nào của mã thực sự sẽ thực thi, tôi chỉ chuyển mã mọi thứ mà tôi thấy.
+
+Để làm theo, hãy tải xuống ví dụ DSDT từ bài đăng này và làm theo. Ví dụ cụ thể DSDT này dành cho laptop HP Envy 14. Bản patch cuối cùng và hoàn chỉnh được tôi hiện đang được lưu trữ tại kho lưu trữ của tôi với tên gọi "HP Envy 14."
+
+Trước tiên hãy bắt đầu bằng cách xác định các khu vực của DSDT có khả năng cần được thay đổi. Mở file DSDT bằng MaciASL và tìm kiếm từ khoá 'EmbeddedControl'. Có thể có nhiều 'EmbeddedControl' được tìm thấy trong một DSDT, mỗi EC có những field declarations đi kèm.
+
+Vì vậy, tôi luôn bắt đầu tìm kiếm 'embeddedcontrol' để tìm declaration này.
+
+Trong ví dụ DSDT, bạn sẽ tìm thấy vùng EC duy nhất này:
+
+```text
+OperationRegion (ECF2, EmbeddedControl, Zero, 0xFF)
+```
+
+Đoạn mã ở trên chỉ ra rằng đây là EC 255 byte.
+
+Ta biết nó được gọi là ECF2, do đó việc tiếp theo chúng ta cần làm là tìm từ khoá 'Field \(ECF2'. Như có thể thấy ở đây trong DSDT được mang ra làm ví dụ, chỉ có duy nhất một trường được định nghĩa. Đôi lúc có có thể tìm thấy nhiều hơn một.
+
+The Field definition describes a breakdown of that 255 byte EC region above. You can tell it is related because the name ECF2 is referred to by the Field. Hãy xem điều này như là một structure \(hay còn gọi là struct trong C\) into the EC.
+
+Bước tiếp theo là kiểm tra các items trong Field definition, tìm các mục lớn hơn 8-bit. Ví dụ, trường đầu tiên được khai báo là BDN0, 56:
+
+```text
+Field (ECF2, ByteAcc, Lock, Preserve)
+   {
+       Offset (0x10),
+       BDN0,   56,
+...
+```
+
+Đây là một trường 56-bit. Lớn hơn 8-bit và nếu đoạn mã trên được truy cập vào, trong DSDT, đoạn mã đó sẽ cần chỉnh sửa theo definition của trường này. Trong file ví dụ, nếu bạn tìm kiếm phần còn lại của DSDT với từ khoá "BDN0", bạn sẽ tìm thấy:
+
+```text
+Store (BDN0, BDN)
+```
+
+Đoạn mã này có chức năng lưu trữ lại giá trị tại BDN0 \(ở trong EC\) vào BDN. Khi các trường **lớn hơn 32-bit** được truy cập, chúng sẽ được truy cập dưới dạng **Buffer** \(Dữ liệu tạm thời\). Các trường **32-bit hoặc nhỏ hơn** sẽ được truy cập dưới dạng **Integer** \(Số nguyên\). Điều này rất quan trọng khi bạn thay đổi mã nguồn. Việc thay đổi các dữ liệu ở dạng Buffer có phần khó hơn so với Integer. Ta phải nhận biết được đoạn mã là đọc từ EC hay ghi vào EC, bởi vì ta sẽ có cách xử lý khác nhau cho mỗi trường hợp. Đoạn mã phía trên được sử dụng để đọc từ EC.
+
+Quan sát phần còn lại của EC, ta tìm tất cả các trường khác hớn hơn 8-bit, với mới trường, tìm kiếm phần còn lại của DSDT và xem chúng có được truy cập không. Chuyện thường thấy là có những trường không được truy cập, và đối với những trường đó, ta không cần phải làm gì cả. Trường tiếp theo mà ta thấy là BMN0:
+
+```text
+BMN0,   32,
+```
+
+
 

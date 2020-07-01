@@ -1,4 +1,4 @@
-# Sửa lỗi trạng thái của pin
+# Sửa trạng thái của pin
 
 
 
