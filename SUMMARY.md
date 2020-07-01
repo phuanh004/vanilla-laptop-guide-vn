@@ -5,6 +5,7 @@
 ## Giới thiệu
 
 * [Những hạn chế về phần cứng](gioi-thieu/tong-quan.md)
+* [Hạn chế pháp lý](gioi-thieu/han-che-phap-ly.md)
 
 ## Hoàn thiện các chức năng sau khi cài đặt <a id="sau-cai-dat"></a>
 
