@@ -10,7 +10,7 @@ Hiện tại, việc vá pin không được hỗ trợ trong hướng dẫn nà
 
 Mặc dù việc sử dụng bản tuỳ chỉnh của DSDT là điều không nên để tránh các sự cố với Windows and các bản cập nhập phần mềm máy tính, nhưng nó có thể là một điểm xuất phát khá hữu ích vì việc nắm bắt và tự làm có chút dễ dàng hơn với bạn:
 
-[**Patch DSDT cho trạng thái của pin theo phương pháp của @Rehabman\)**](/patch-dsdt-cho-trang-thai-cua-pin)
+[**Patch DSDT cho trạng thái của pin theo phương pháp của @Rehabman\)**](https://phuanh004.gitbook.io/hackintosh-vn/nhung-lien-ket-ngoai-duoc-dich-de-ho-tro-cho-bai-huong-dan/patch-dsdt-cho-trang-thai-cua-pin#huong-dan-cach-patch-dsdt-de-trang-thai-pin-hoat-dong)
 
 {% hint style="info" %}
 **DSDT phải được đặt đầu tiên trong config.plist \(ACPI -&gt; Add\). Cũng nên nhớ rằng DSDT cũng phải được đặt trong thư mục EFI/OC/ACPI.**
