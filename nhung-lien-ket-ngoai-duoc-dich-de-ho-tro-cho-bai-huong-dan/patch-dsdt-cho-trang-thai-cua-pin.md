@@ -20,7 +20,7 @@ Bạn nên làm quen với các nguyên tắc patch DSDT / SSDT cơ bản tại:
 
 Để kết hợp DSDT với một bản patch, điều kiện tiên quyết là bạn phải hiểu các bản patch được tạo ra như thế nào, để bạn hiểu được là mình cần tìm gì trong DSDT và kết hợp với những bản patch đã có sẵn. Một bộ patch có khả năng cao là thành công khi được tạo ra mà không có lỗi, và vá các trường dữ liệu có khả năng và các trường cần được patch có điểm tương đồng có thể kết hợp lại với nhau được.
 
-More info here: [https://www.tonymacx86.com/threads/...g-battery-status.116102/page-333\#post-1360697](https://www.tonymacx86.com/threads/...g-battery-status.116102/page-333#post-1360697)
+Xem thêm tại: [https://www.tonymacx86.com/threads/...g-battery-status.116102/page-333\#post-1360697](https://www.tonymacx86.com/threads/...g-battery-status.116102/page-333#post-1360697)
 
 {% hint style="danger" %}
 Không sử dụng DSDT Editor hoặc bất kỳ chương trình nào khác ngoài **MaciASL**. Bởi @Rehabman không kiểm tra các bản vá của mình với DSDT Editor, chỉ được kiểm tra với **MaciASL**.
@@ -30,7 +30,11 @@ Không sử dụng DSDT Editor hoặc bất kỳ chương trình nào khác ngo�
 
 Ngoài các trường EC nhiều byte \(multi-byte\), có nhiều vấn đề khác DSDT có thể ảnh hưởng đến trạng thái pin. Những vấn đề này không cụ thể cho trạng thái của pin, nhưng chúng thường được thông báo trong lần đầu tiên khi bạn implement trạng thái pin.
 
-Mã pin có thể phụ thuộc vào việc có phiên bản Windows được công nhận là may depend on having a recognized version of Windows as the host OS. Để khắc phục, hãy sử dụng "OS Check Fix" từ kho lưu trữ DSDT patch của laptop. Điều này sẽ làm cho DSDT thực hiện các hành động tương tự như khi chạy "Windows 2006." Lựa chọn những bản patch khác nhau sẽ có những ảnh hưởng khác nhau \(ví dụ: "Windows 2012"\).
+Mã pin có thể phụ thuộc vào việc có phiên bản Windows được nhận là hệ điều hành trên máy chủ \(host OS\). Để khắc phục, hãy sử dụng "OS Check Fix" từ kho lưu trữ DSDT patch của laptop. Điều này sẽ làm cho DSDT thực hiện các hành động tương tự như khi chạy "Windows 2006." Lựa chọn những bản patch khác nhau sẽ có những ảnh hưởng khác nhau \(ví dụ: "Windows 2012"\).
 
 Một vấn đề phổ biến khác sự kế thừa của ACPI trên OS X gặp khó khăn với các đối tượng Mutex được khai báo với SyncLevel khác 0 \(non-zero\) \(để biết thêm thông tin hãy đọc thông số ACPI\). Để khắc phục, hãy sử dụng patch "Fix Mutex with non-zero SyncLevel" từ kho lưu trữ DSDT patch của laptop.
+
+### Các kỹ năng cần có
+
+**DSDT** là một "chương trình máy tính." Như vậy, sẽ hữu ích khi có một số kỹ năng lập trình và kỹ năng về máy tính khi muốn sửa đổi nó. Các bản patch của DSDT về cơ bản, cũng có ngôn ngữ riêng của chúng \(được mô tả ngắn trong [Wiki của MaciASL](http://sourceforge.net/projects/maciasl/)\). 
 

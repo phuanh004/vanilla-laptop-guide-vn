@@ -12,11 +12,11 @@ Mặc dù việc sử dụng bản tuỳ chỉnh của DSDT là điều không n
 
 [**Patch DSDT cho trạng thái của pin theo phương pháp của @Rehabman\)**](https://phuanh004.gitbook.io/hackintosh-vn/nhung-lien-ket-ngoai-duoc-dich-de-ho-tro-cho-bai-huong-dan/patch-dsdt-cho-trang-thai-cua-pin#huong-dan-cach-patch-dsdt-de-trang-thai-pin-hoat-dong)
 
-{% hint style="info" %}
+{% hint style="warning" %}
 **DSDT phải được đặt đầu tiên trong config.plist \(ACPI -&gt; Add\). Cũng nên nhớ rằng DSDT cũng phải được đặt trong thư mục EFI/OC/ACPI.**
 {% endhint %}
 
-{% hint style="info" %}
+{% hint style="warning" %}
 **Tránh sử dụng MaciASL và iASL của Rehabman, bởi từ lâu, chúng đã bị lãng quên và không được cập nhật. Vì thế một phiên bản khác được khuyên dùng là** [**MaciASL**](https://github.com/acidanthera/MaciASL/releases) **từ Acidanthera.**
 {% endhint %}
 
